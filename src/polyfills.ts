@@ -7,26 +7,26 @@ import 'es7-reflect-metadata';
 import 'zone.js/dist/zone-microtask';
 
 if ('production' === process.env.ENV) {
-  // Production
+    // Production
 
-  // RxJS
-  // In production manually include the operators you use
-  require('rxjs/add/operator/map');
-  require('rxjs/add/operator/mergeMap');
+    // RxJS
+    // In production manually include the operators you use
+    require('rxjs/add/operator/map');
+    require('rxjs/add/operator/mergeMap');
 
 } else {
-  // Development
+    // Development
 
-  Error['stackTraceLimit'] = Infinity;
+    Error['stackTraceLimit'] = Infinity;
 
-  require('zone.js/dist/long-stack-trace-zone');
+    require('zone.js/dist/long-stack-trace-zone');
 
-  // RxJS
-  // to include every operator uncomment
-  // require('rxjs/Rx');
+    // RxJS
+    // to include every operator uncomment
+    // require('rxjs/Rx');
 
-  require('rxjs/add/operator/map');
-  require('rxjs/add/operator/mergeMap');
+    require('rxjs/add/operator/map');
+    require('rxjs/add/operator/mergeMap');
 
 }
 

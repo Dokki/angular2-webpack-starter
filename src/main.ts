@@ -13,10 +13,10 @@ import {HTTP_PROVIDERS} from 'angular2/http';
 const ENV_PROVIDERS = [];
 
 if ('production' === process.env.ENV) {
-  ngCore.enableProdMode();
-  ENV_PROVIDERS.push(browser.ELEMENT_PROBE_PROVIDERS_PROD_MODE);
+    ngCore.enableProdMode();
+    ENV_PROVIDERS.push(browser.ELEMENT_PROBE_PROVIDERS_PROD_MODE);
 } else {
-  ENV_PROVIDERS.push(browser.ELEMENT_PROBE_PROVIDERS);
+    ENV_PROVIDERS.push(browser.ELEMENT_PROBE_PROVIDERS);
 }
 
 /*
@@ -30,13 +30,13 @@ import {App} from './app/app';
  * our Services and Providers into Angular's dependency injection
  */
 export function main() {
-  return browser.bootstrap(App, [
-    ...ENV_PROVIDERS,
-    ...HTTP_PROVIDERS,
-    ...ROUTER_PROVIDERS,
-    ngCore.provide(LocationStrategy, { useClass: HashLocationStrategy })
-  ])
-  .catch(err => console.error(err));
+    return browser.bootstrap(App, [
+        ...ENV_PROVIDERS,
+        ...HTTP_PROVIDERS,
+        ...ROUTER_PROVIDERS,
+        ngCore.provide(LocationStrategy, { useClass: HashLocationStrategy })
+    ])
+    .catch(err => console.error(err));
 }
 
 
@@ -53,22 +53,22 @@ export function main() {
  */
 
 function bootstrapDomReady() {
-  // bootstrap after document is ready
-  return document.addEventListener('DOMContentLoaded', main);
+    // bootstrap after document is ready
+    return document.addEventListener('DOMContentLoaded', main);
 }
 
 if ('development' === process.env.ENV) {
-  // activate hot module reload
-  if (process.env.HMR) {
-    if (document.readyState === 'complete') {
-      main();
+    // activate hot module reload
+    if (process.env.HMR) {
+        if (document.readyState === 'complete') {
+            main();
+        } else {
+            bootstrapDomReady();
+        }
+        module.hot.accept();
     } else {
-      bootstrapDomReady();
+        bootstrapDomReady();
     }
-    module.hot.accept();
-  } else {
-    bootstrapDomReady();
-  }
 } else {
-  bootstrapDomReady();
+    bootstrapDomReady();
 }
