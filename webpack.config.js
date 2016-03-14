@@ -85,13 +85,13 @@ module.exports = {
             // Support for CSS
             {
                 test: /\.css$/,
-                loader: 'raw-loader',
+                loader: 'css-loader',
             },
 
             // Support for .html
             {
                 test: /\.html$/,
-                loader: 'raw-loader',
+                loader: 'html-loader',
                 exclude: [helpers.root('src/index.html'), helpers.root('node_modules')],
             },
 

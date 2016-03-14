@@ -18,5 +18,4 @@ describe('App', () => {
     it('should have a greeting', inject([ App ], (app) => {
         expect(app.greeting).toEqual('World');
     }));
-
 });

@@ -14,7 +14,6 @@ const DedupePlugin = require('webpack/lib/optimize/DedupePlugin');
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
 const CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
 const CompressionPlugin = require('compression-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackMd5Hash = require('webpack-md5-hash');
 const ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
@@ -24,7 +23,6 @@ const HOST = process.env.HOST || 'localhost';
 const PORT = process.env.PORT || 8080;
 
 const metadata = {
-    title: 'Angular2 Webpack Starter by @gdi2990 from @AngularClass',
     baseUrl: '/',
     host: HOST,
     port: PORT,
@@ -96,15 +94,21 @@ module.exports = {
             // Support for CSS as raw text
             {
                 test: /\.css$/,
-                loader: 'raw-loader',
+                loader: 'css-loader',
                 exclude: [helpers.root('node_modules')],
             },
 
             // support for .html as raw text
             {
                 test: /\.html$/,
-                loader: 'raw-loader',
+                loader: 'html-loader',
                 exclude: [helpers.root('src/index.html')],
+            },
+
+            // Support for static files (images, fonts, etc)
+            {
+                test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)$/,
+                loader: 'file',
             },
 
         ],
@@ -125,14 +129,6 @@ module.exports = {
             filename: 'polyfills.[chunkhash].bundle.js',
             chunks: Infinity,
         }),
-
-        // static assets
-        new CopyWebpackPlugin([
-            {
-                from: 'src/assets',
-                to: 'assets',
-            },
-        ]),
 
         // generating html
         new HtmlWebpackPlugin({ template: 'src/index.html' }),
