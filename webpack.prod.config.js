@@ -17,6 +17,7 @@ const CompressionPlugin = require('compression-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackMd5Hash = require('webpack-md5-hash');
 const ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
 const HOST = process.env.HOST || 'localhost';
@@ -70,7 +71,6 @@ module.exports = {
         ],
         loaders: [
 
-            // Support Angular 2 async routes via .async.ts
             // Support for .ts files.
             {
                 test: /\.ts$/,
@@ -94,8 +94,13 @@ module.exports = {
             // Support for CSS as raw text
             {
                 test: /\.css$/,
-                loader: 'css-loader',
-                exclude: [helpers.root('node_modules')],
+                loader: ExtractTextPlugin.extract('style', 'css?sourceMap'),
+                // loader: 'style!css?sourceMap',
+            },
+            {
+                test: /\.less$/,
+                // loader: 'style!css?sourceMap!less?sourceMap',
+                loader: ExtractTextPlugin.extract('style', 'css?sourceMap!less?sourceMap'),
             },
 
             // support for .html as raw text
@@ -132,6 +137,7 @@ module.exports = {
 
         // generating html
         new HtmlWebpackPlugin({ template: 'src/index.html' }),
+        new ExtractTextPlugin('[name].[chunkhash].bundle.css'),
         new DefinePlugin({
             // Environment helpers
             'process.env': {
@@ -145,7 +151,7 @@ module.exports = {
             // to debug prod builds uncomment //debug lines and comment //prod lines
 
             // beautify: true,  // debug
-            // mangle: false,  // debug
+            mangle: false,  // debug
             // dead_code: false,  // debug
             // unused: false,  // debug
             // deadCode: false,  // debug
@@ -162,37 +168,37 @@ module.exports = {
             // disable mangling because of a bug in angular2 beta.1, beta.2 and beta.3
             // TODO(mastertinner): enable mangling as soon as angular2 beta.4 is out
             // mangle: { screw_ie8: true },  // prod
-            mangle: {
-                screw_ie8: true,
-                except: [
-                    'RouterActive',
-                    'RouterLink',
-                    'RouterOutlet',
-                    'NgFor',
-                    'NgIf',
-                    'NgClass',
-                    'NgSwitch',
-                    'NgStyle',
-                    'NgSwitchDefault',
-                    'NgModel',
-                    'NgControl',
-                    'NgFormControl',
-                    'NgForm',
-                    'AsyncPipe',
-                    'DatePipe',
-                    'JsonPipe',
-                    'NumberPipe',
-                    'DecimalPipe',
-                    'PercentPipe',
-                    'CurrencyPipe',
-                    'LowerCasePipe',
-                    'UpperCasePipe',
-                    'SlicePipe',
-                    'ReplacePipe',
-                    'I18nPluralPipe',
-                    'I18nSelectPipe',
-                ],  // needed for uglify RouterLink problem
-            },  // prod
+            // mangle: {
+            //     screw_ie8: true,
+            //     except: [
+            //         'RouterActive',
+            //         'RouterLink',
+            //         'RouterOutlet',
+            //         'NgFor',
+            //         'NgIf',
+            //         'NgClass',
+            //         'NgSwitch',
+            //         'NgStyle',
+            //         'NgSwitchDefault',
+            //         'NgModel',
+            //         'NgControl',
+            //         'NgFormControl',
+            //         'NgForm',
+            //         'AsyncPipe',
+            //         'DatePipe',
+            //         'JsonPipe',
+            //         'NumberPipe',
+            //         'DecimalPipe',
+            //         'PercentPipe',
+            //         'CurrencyPipe',
+            //         'LowerCasePipe',
+            //         'UpperCasePipe',
+            //         'SlicePipe',
+            //         'ReplacePipe',
+            //         'I18nPluralPipe',
+            //         'I18nSelectPipe',
+            //     ],  // needed for uglify RouterLink problem
+            // },  // prod
             compress: { screw_ie8: true },  // prod
             comments: false,  // prod
         }),

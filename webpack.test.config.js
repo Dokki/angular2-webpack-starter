@@ -58,8 +58,11 @@ module.exports = {
 
             {
                 test: /\.css$/,
-                loader: 'css-loader',
-                exclude: [helpers.root('src/index.html'), helpers.root('node_modules')],
+                loader: 'style!css?sourceMap',
+            },
+            {
+                test: /\.less$/,
+                loader: 'style!css?sourceMap!less?sourceMap',
             },
 
             {
