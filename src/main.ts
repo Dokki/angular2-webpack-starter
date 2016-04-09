@@ -1,20 +1,9 @@
 import {bootstrap} from 'angular2/platform/browser';
-/*
- * Platform and Environment
- * our providers/directives/pipes
- */
+
 import {DIRECTIVES, PROVIDERS, ENV_PROVIDERS} from './platform';
 
-/*
- * App Component
- * our top level component that holds all of our components
- */
-import {App} from './app';
+import {App, AppRef} from './app';
 
-/*
- * Bootstrap our Angular app with a top level component `App` and inject
- * our Services and Providers into Angular's dependency injection
- */
 export function main(initialHmrState?: any): Promise<any> {
 
     return bootstrap(App, [
@@ -22,19 +11,9 @@ export function main(initialHmrState?: any): Promise<any> {
         ...PROVIDERS,
         ...DIRECTIVES,
     ])
+        .then(appRef => AppRef.register(appRef))
         .catch(err => console.error(err));
 }
-
-
-
-
-
-/*
- * Vendors
- * For vendors for example jQuery, Lodash, angular2-jwt just import them anywhere in your app
- * You can also import them in vendors to ensure that they are bundled in one file
- * Also see custom-typings.d.ts as you also need to do `typings install x` where `x` is your module
- */
 
 
 /*

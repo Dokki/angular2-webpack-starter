@@ -19,7 +19,7 @@ This is a simplified version of Angular 2 Webpack Starter by @AngularClass.
 ```bash
 # clone our repo
 # --depth 1 removes all but one .git commit history
-git clone --depth 1 https://github.com/angularclass/angular2-webpack-starter.git
+git clone --depth 1 https://github.com/bromzh/angular2-webpack-starter.git
 
 # change directory to our repo
 cd angular2-webpack-starter
