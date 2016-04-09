@@ -28,6 +28,7 @@ const metadata = {
     host: HOST,
     port: PORT,
     ENV,
+    HMR: false,
 };
 
 /*
@@ -42,6 +43,7 @@ module.exports = {
 
     entry: {
         polyfills: './src/polyfills.ts',
+        vendors: './src/vendors.ts',
         main: './src/main.ts', // our angular app
     },
 
@@ -205,11 +207,11 @@ module.exports = {
         // jscs: enable
 
        // include uglify in production
-        new CompressionPlugin({
-            algorithm: helpers.gzipMaxLevel,
-            regExp: /\.css$|\.html$|\.js$|\.map$/,
-            threshold: 2 * 1024,
-        }),
+       //  new CompressionPlugin({
+       //      algorithm: helpers.gzipMaxLevel,
+       //      regExp: /\.css$|\.html$|\.js$|\.map$/,
+       //      threshold: 2 * 1024,
+       //  }),
     ],
 
     // Other module loader config

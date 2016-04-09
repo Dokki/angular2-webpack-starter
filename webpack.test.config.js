@@ -86,11 +86,13 @@ module.exports = {
     },
     plugins: [
         new DefinePlugin({
-            // Environment helpers
+            'ENV': JSON.stringify(ENV),
+            'HMR': false,
             'process.env': {
-                ENV: JSON.stringify(ENV),
-                NODE_ENV: JSON.stringify(ENV),
-            },
+                'ENV': JSON.stringify(ENV),
+                'NODE_ENV': JSON.stringify(ENV),
+                'HMR': false,
+            }
         }),
     ],
     node: {

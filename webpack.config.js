@@ -32,12 +32,13 @@ module.exports = {
     // static data for index.html
     metadata,
 
-    devtool: 'source-map',  // 'source-map',
+    devtool: 'cheap-module-eval-source-map',  // 'source-map',
     debug: true,
 
     // our angular app
     entry: {
         polyfills: './src/polyfills.ts',
+        vendors: './src/vendors.ts',
         main: './src/main.ts',
     },
 
@@ -119,11 +120,13 @@ module.exports = {
 
         // replace
         new DefinePlugin({
+            'ENV': JSON.stringify(metadata.ENV),
+            'HMR': metadata.HMR,
             'process.env': {
-                ENV: JSON.stringify(metadata.ENV),
-                NODE_ENV: JSON.stringify(metadata.ENV),
-                HMR,
-            },
+                'ENV': JSON.stringify(metadata.ENV),
+                'NODE_ENV': JSON.stringify(metadata.ENV),
+                'HMR': metadata.HMR,
+            }
         }),
     ],
 
