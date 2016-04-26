@@ -5,6 +5,8 @@ interface GlobalEnvironment {
     HMR;
 }
 
+// declare function require(s: string): any;
+
 interface WebpackModule {
     hot: {
         data?: any,

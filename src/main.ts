@@ -1,15 +1,16 @@
 import {bootstrap} from 'angular2/platform/browser';
 
-import {DIRECTIVES, PROVIDERS, ENV_PROVIDERS} from './platform';
+import {PROVIDERS, ENV_PROVIDERS, DIRECTIVES, PIPES} from './common';
 
 import {App, AppRef} from './app';
 
-export function main(initialHmrState?: any): Promise<any> {
+export function main(): Promise<any> {
 
     return bootstrap(App, [
         ...ENV_PROVIDERS,
         ...PROVIDERS,
         ...DIRECTIVES,
+        ...PIPES,
     ])
         .then(appRef => AppRef.register(appRef))
         .catch(err => console.error(err));
@@ -22,8 +23,12 @@ export function main(initialHmrState?: any): Promise<any> {
  */
 if ('development' === ENV && HMR === true) {
     // activate hot module reload
-    let ngHmr = require('angular2-hmr');
-    ngHmr.hotModuleReplacement(main, module);
+    if (document.readyState === 'complete') {
+        main();
+    } else {
+        document.addEventListener('DOMContentLoaded', () => main());
+    }
+    module.hot.accept();
 } else {
     // bootstrap when documetn is ready
     document.addEventListener('DOMContentLoaded', () => main());
