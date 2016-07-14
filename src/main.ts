@@ -1,26 +1,18 @@
-import {bootstrap} from 'angular2/platform/browser';
-import {PROVIDERS, ENV_PROVIDERS, DIRECTIVES, PIPES} from './common';
-import {App, AppRef} from './app';
+import { ComponentRef } from '@angular/core';
+import { bootstrap } from '@angular/platform-browser-dynamic';
+import { PLATFORM_PROVIDERS } from './platform';
+import { AppComponent, APP_PROVIDERS } from './app';
 
-export function main(): Promise<any> {
+import { enableHotModuleReload, enableEnvironmentTools } from './platform/environment';
 
-    return bootstrap(App, [
-        ...ENV_PROVIDERS,
-        ...PROVIDERS,
-        ...DIRECTIVES,
-        ...PIPES,
+export function main(): Promise<ComponentRef<AppComponent>> {
+
+    return bootstrap(AppComponent, [
+        ...PLATFORM_PROVIDERS,
+        ...APP_PROVIDERS,
     ])
-        .then(appRef => AppRef.register(appRef))
+        .then(appRef => enableEnvironmentTools(appRef))
         .catch(err => console.error(err));
 }
 
-if ('development' === ENV && HMR === true) {
-    if (document.readyState === 'complete') {
-        main();
-    } else {
-        document.addEventListener('DOMContentLoaded', () => main());
-    }
-    module.hot.accept();
-} else {
-    document.addEventListener('DOMContentLoaded', () => main());
-}
+enableHotModuleReload(main, module);

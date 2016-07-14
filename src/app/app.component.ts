@@ -1,11 +1,13 @@
-import {Component} from 'angular2/core';
+import { Component } from '@angular/core';
+
+require('./app.less');
 
 @Component({
-    selector: 'app',
+    selector: 'as-app',
     template: `
-        <h1>Hello, {{ greeting }}</h1>
+        <h1>{{ title }}</h1>
     `,
 })
-export class App {
-    greeting = 'World';
+export class AppComponent {
+    title = 'App here';
 }

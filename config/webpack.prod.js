@@ -3,7 +3,6 @@ const webpackMerge = require('webpack-merge'); // used to merge webpack configs
 const commonConfig = require('./webpack.common.js'); // the settings that are common to prod and dev
 
 const DefinePlugin = require('webpack/lib/DefinePlugin');
-const CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
 const DedupePlugin = require('webpack/lib/optimize/DedupePlugin');
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
 const WebpackMd5Hash = require('webpack-md5-hash');
@@ -34,30 +33,25 @@ const CONFIG = webpackMerge.smart(commonConfig, {
 
     module: {
         preloaders: [
-            {
-                test: /\.ts$/,
-                loader: 'tslint-loader',
-                exclude: [helpers.root('node_modules')],
-            },
+            // {
+            //     test: /\.ts$/,
+            //     loader: 'tslint-loader',
+            //     exclude: [helpers.root('node_modules')],
+            // },
         ],
         loaders: [
             {
                 test: /\.css$/,
                 loader: ExtractTextPlugin.extract('style', 'css?sourceMap!postcss'),
             },
-
-            // {
-            //     test: /\.png$/,
-            //     loader: 'url?limit=10000000',
-            // },
+            {
+                test: /\.less$/,
+                loader: ExtractTextPlugin.extract('style', 'css?sourceMap!postcss!less?sourceMap'),
+            },
         ],
     },
 
     plugins: [
-        new CommonsChunkPlugin({
-            name: helpers.reverse(['polyfills', 'vendor']),
-        }),
-
         new WebpackMd5Hash(),
         new DedupePlugin(),
 

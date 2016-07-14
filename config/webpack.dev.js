@@ -25,6 +25,7 @@ const CONFIG = webpackMerge.smart(commonConfig, {
 
     // debug: true,
     devtool: '#cheap-module-eval-source-map',
+    // devtool: '#source-map',
     output: {
         path: helpers.root('dist'),
         filename: '[name].bundle.js',
@@ -43,27 +44,10 @@ const CONFIG = webpackMerge.smart(commonConfig, {
         }),
     ],
 
-    // tslint: {
-    //     emitErrors: false,
-    //     failOnHint: false,
-    //     resourcePath: 'src',
-    // },
-
-    devServer: {
-        port: METADATA.port,
-        host: METADATA.host,
-        historyApiFallback: true,
-        watchOptions: {
-            aggregateTimeout: 300,
-            poll: 1000,
-        },
-        stats: {
-            modules: false,
-            cached: false,
-            colors: true,
-            chunk: false,
-        },
-        outputPath: helpers.root('dist'),
+    tslint: {
+        emitErrors: false,
+        failOnHint: false,
+        resourcePath: 'src',
     },
 
     node: {
